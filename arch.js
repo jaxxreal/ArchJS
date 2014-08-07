@@ -33,12 +33,16 @@ Arch = (function () {
         }
  
         if (args[1]) {
-            if (typeof args[1] === 'function') {
-                args[1](elem);
-            } else {
-                elem.innerHTML = args[1];
+                if (typeof args[1] === 'function') {
+                    args[1](elem);
+                } else {
+                    var out = '';
+                    if(args[1] instanceof Array)
+                        for(var k in args[1])
+                            out+=args[1][k].outerHTML ? args[1][k].outerHTML : args[1][k];
+                    elem.innerHTML = out ? out : args[1].outerHTML ? args[1].outerHTML : args[1];
+                }
             }
-        }
  
         return elem;
     };
